@@ -1,3 +1,33 @@
+// create user selection buttons and container
+const container = document.querySelector("#container");
+const rockButton = document.createElement("button");
+const paperButton = document.createElement("button");
+const scissorsButton = document.createElement("button");
+
+// attatch buttons to container
+container.appendChild(rockButton);
+container.appendChild(paperButton);
+container.appendChild(scissorsButton);
+
+// give each button text content
+rockButton.textContent = "Rock"
+paperButton.textContent = "Paper"
+scissorsButton.textContent = "Scissors"
+
+// give each button a unique id
+rockButton.id = "rock";
+paperButton.id = "paper";
+scissorsButton.id = "scissors";
+
+// add an event lister for each button element
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        // button differentiated by id
+        alert(button.id);
+    });
+});
+
 // create a function for computer choice
 // return rock paper or scissors in competer choice function at random
 // test computer choice function
@@ -59,7 +89,7 @@ function playRound(computerChoice, humanChoice) {
         gameResult = "You win! Scissors beat Paper.";
         humanScore++
     }
-    return(gameResult);
+    return (gameResult);
 }
 
 // create a function named playGame
@@ -67,13 +97,8 @@ function playRound(computerChoice, humanChoice) {
 // play 5 rounds by calling play round 5 times
 
 function playGame() {
-    for (let round = 1; round <= 5; round++) {
-        const computerSelection = getComputerChoice();
-        const humanSelection = getHumanChoice();
-
-        alert(`Opponent chose ${computerSelection}`);
-        alert(playRound(computerSelection, humanSelection));
-    }
+    alert(`Opponent chose ${computerSelection}`);
+    alert(playRound(computerSelection, humanSelection));
     alert("Game Over")
     if (humanScore > computerScore) {
         alert(`Your Score: ${humanScore} | Opponent Score: ${computerScore} | Congrats, Winner.`);
@@ -83,3 +108,5 @@ function playGame() {
 }
 
 playGame();
+
+
