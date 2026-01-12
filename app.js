@@ -20,6 +20,8 @@ buttonContainer.appendChild(scissorsButton);
 scissorsButton.textContent = "Scissors"
 scissorsButton.classList.add("scissors");
 
+const resetButton = document.createElement("button");
+
 // create a function for computer choice
 // return rock paper or scissors in competer choice function at random
 // test computer choice function
@@ -48,14 +50,14 @@ const scoreContainer = document.createElement("div");
 container.appendChild(scoreContainer);
 
 const humanScoreContainer = document.createElement("div");
-scoreContainer.appendChild(humanScoreContainer);
-
+//scoreContainer.appendChild(humanScoreContainer);
 
 const compScoreContainer = document.createElement("div");
-scoreContainer.appendChild(compScoreContainer);
+//scoreContainer.appendChild(compScoreContainer);
 
 const historyContainer = document.createElement("ul");
 container.appendChild(historyContainer);
+historyContainer.style.listStyle = "none";
 
 // write logic to play a single round
 // create playRound function
@@ -66,6 +68,9 @@ container.appendChild(historyContainer);
 
 function playRound(humanChoice, computerChoice) {
     let gameResult = "";
+
+    scoreContainer.appendChild(humanScoreContainer);
+    scoreContainer.appendChild(compScoreContainer);
 
     if (humanChoice === computerChoice) {
         gameResult = `Opponent chose ${computerChoice}. It's a Draw!`;
@@ -107,23 +112,46 @@ buttonContainer.addEventListener("click", (event) => {
         case "scissors":
             playRound("scissors", getComputerChoice());
             break;
+        case "reset":
+            gameReset();
+            break;
     }
 });
 
-// create a function named playGame
-// move playRound inside of playGame function
 // play 5 rounds by calling play round 5 times
 
 function getGameWinner() {
     if (humanScore === 5 || computerScore === 5) {
         if (humanScore > computerScore) {
-            console.log("You Win");
+            historyContainer.innerHTML += `You win! ${humanScore} to ${computerScore}. Congrats, Winner!`;
         } else if (humanScore < computerScore) {
-            console.log("You lose");
+            historyContainer.innerHTML += `You lost...${humanScore} to ${computerScore}. Try again, Loser!`;     
         } else {
-            console.log("it's a tie");
+            historyContainer.innerHTML += `It's a tie! ${humanScore} to ${computerScore}. Not worth celebrating...`;
         }
         humanScore = 0;
         computerScore = 0;
+        humanScoreContainer.remove();
+        compScoreContainer.remove();
+        gameEnd();
     }
+}
+
+function gameEnd() {
+    buttonContainer.appendChild(resetButton);
+    resetButton.textContent = "Reset";
+    resetButton.classList.add("reset");
+
+    rockButton.disabled = true;
+    paperButton.disabled = true;
+    scissorsButton.disabled = true;
+}
+
+function gameReset() {
+    rockButton.disabled = false;
+    paperButton.disabled = false;
+    scissorsButton.disabled = false;
+
+    historyContainer.innerHTML = "";
+    resetButton.remove();
 }
